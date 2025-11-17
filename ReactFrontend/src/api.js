@@ -3,7 +3,7 @@ import axios from "axios";
 const baseURL =
   process.env.REACT_APP_API_BASE ||
   process.env.REACT_APP_BACKEND_URL ||
-  "http://localhost:5000";
+  "https://8d8f8324.api.kavia.app/";
 
 export const api = axios.create({
   baseURL,
