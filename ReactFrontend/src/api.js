@@ -1,9 +1,15 @@
 import axios from "axios";
 
+/**
+ * Base URL resolution order for the backend API:
+ * 1. REACT_APP_API_BASE (preferred)
+ * 2. REACT_APP_BACKEND_URL (fallback)
+ * 3. Default http://localhost:5000
+ */
 const baseURL =
   process.env.REACT_APP_API_BASE ||
   process.env.REACT_APP_BACKEND_URL ||
-  "https://8d8f8324.api.kavia.app/";
+  "http://localhost:5000";
 
 export const api = axios.create({
   baseURL,
