@@ -14,7 +14,13 @@ function App() {
   const [devices, setDevices] = useState([]);
   const [loading, setLoading] = useState(false);
   const [statusMsg, setStatusMsg] = useState("");
-  const [form, setForm] = useState({ name: "", ip: "", type: "Router", location: "" });
+  const [loadError, setLoadError] = useState(""); // track fetch error for table display
+  const [form, setForm] = useState({
+    name: "",
+    ip: "",
+    type: "Router",
+    location: "",
+  });
   const [editing, setEditing] = useState(null); // name when editing
 
   const types = useMemo(() => ["Router", "Switch", "Server"], []);
@@ -26,13 +32,18 @@ function App() {
     }
   };
 
+  // Fetch and populate devices; ensures we parse { devices: [...] } correctly
   const refresh = async () => {
     setLoading(true);
+    setLoadError("");
     try {
-      const data = await listDevices();
-      setDevices(data);
+      const list = await listDevices(); // listDevices returns array from res.data.devices
+      setDevices(Array.isArray(list) ? list : []);
     } catch (e) {
-      showStatus(`Failed to load devices: ${e?.response?.data?.error || e.message}`);
+      const err = e?.response?.data?.error || e.message || "Unknown error";
+      setLoadError(err);
+      showStatus(`Failed to load devices: ${err}`);
+      setDevices([]); // ensure UI reflects empty on error
     } finally {
       setLoading(false);
     }
@@ -48,11 +59,13 @@ function App() {
   };
 
   const validate = (f) => {
-    if (!f.ip || !f.type || !f.location || (!editing && !f.name)) return "All fields are required.";
+    if (!f.ip || !f.type || !f.location || (!editing && !f.name))
+      return "All fields are required.";
     const ipv4 =
       /^(25[0-5]|2[0-4]\d|[0-1]?\d?\d)(\.(25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}$/;
     if (!ipv4.test(f.ip)) return "Invalid IP format (expects IPv4).";
-    if (!types.includes(f.type)) return "Type must be Router, Switch, or Server.";
+    if (!types.includes(f.type))
+      return "Type must be Router, Switch, or Server.";
     if (!editing) {
       const nameValid = /^[a-zA-Z0-9_\-\.]+$/.test(f.name);
       if (!nameValid) return "Name may contain letters, numbers, _, -, .";
@@ -70,13 +83,17 @@ function App() {
     }
     try {
       if (editing) {
-        await updateDevice(editing, { ip: form.ip, type: form.type, location: form.location });
+        await updateDevice(editing, {
+          ip: form.ip,
+          type: form.type,
+          location: form.location,
+        });
         showStatus("Device updated.");
       } else {
         await createDevice(form);
         showStatus("Device created.");
       }
-      await refresh();
+      await refresh(); // ensure table updates after write
       resetForm();
     } catch (e) {
       const code = e?.response?.status;
@@ -190,7 +207,7 @@ function App() {
         <div className="helper" style={{ marginBottom: 8 }}>
           Devices
         </div>
-        <table className="table" role="table">
+        <table className="table" role="table" aria-busy={loading ? "true" : "false"}>
           <thead>
             <tr>
               <th>Name</th>
@@ -201,7 +218,19 @@ function App() {
             </tr>
           </thead>
           <tbody>
-            {devices.length === 0 ? (
+            {loading ? (
+              <tr>
+                <td colSpan="5" className="helper">
+                  Loading devices...
+                </td>
+              </tr>
+            ) : loadError ? (
+              <tr>
+                <td colSpan="5" className="helper">
+                  Error loading devices: {loadError}
+                </td>
+              </tr>
+            ) : devices.length === 0 ? (
               <tr>
                 <td colSpan="5" className="helper">
                   No devices yet. Add one above.

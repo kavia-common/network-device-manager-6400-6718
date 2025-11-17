@@ -3,6 +3,7 @@ import axios from "axios";
 /**
  * Backend API base URL is hardcoded to the deployment URI so all requests
  * consistently target the same backend regardless of environment.
+ * Expected shape for GET /devices per OpenAPI and backend: { devices: [...] }
  */
 const BASE_URL = "https://8d8f8324.api.kavia.app/";
 
@@ -16,9 +17,14 @@ export const api = axios.create({
 
 // PUBLIC_INTERFACE
 export async function listDevices() {
-  /** Fetch all devices. */
+  /** Fetch all devices. Returns Device[] from { devices: [...] } */
   const res = await api.get("/devices");
-  return res.data.devices || [];
+  const payload = res?.data;
+  // Defensive parsing in case backend returns unexpected structure
+  if (payload && Array.isArray(payload.devices)) {
+    return payload.devices;
+  }
+  return Array.isArray(payload) ? payload : [];
 }
 
 // PUBLIC_INTERFACE
