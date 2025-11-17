@@ -2,18 +2,16 @@
 
 This UI communicates with the Flask backend via Axios.
 
-## Environment
-
+Environment
 Set one of:
-- `REACT_APP_API_BASE` (recommended) — e.g., http://localhost:5000
+- REACT_APP_API_BASE (recommended) — e.g., http://localhost:5000
 or
-- `REACT_APP_BACKEND_URL`
+- REACT_APP_BACKEND_URL
 
 Other helpful values:
-- `REACT_APP_FRONTEND_URL` to assist backend CORS origin
+- REACT_APP_FRONTEND_URL to assist backend CORS origin
 
-## Run
-
+Run
 - npm install
 - REACT_APP_API_BASE=http://localhost:5000 npm start
 

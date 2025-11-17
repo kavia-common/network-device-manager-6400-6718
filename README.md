@@ -1,39 +1,26 @@
-# Network Device Manager
+# Network Device Manager - React Frontend
 
-Two-container app:
-- React frontend (Network Device Manager UI)
-- Flask backend (REST API using Flask-RESTful with MongoDB via pymongo and ping via pythonping)
+This repository workspace contains the React frontend for the Network Device Manager application.
 
-## Quick Start
+The frontend communicates with a separate Flask backend container via REST APIs. This workspace should only contain frontend code. Backend code and instructions are managed in the dedicated Backend container.
 
-### Backend (Flask)
-1. cd Backend
-2. python -m venv .venv && source .venv/bin/activate
-3. pip install -r requirements.txt
-4. Set environment variables (see .env.example at repo root)
-   - export MONGO_URI="mongodb://localhost:27017"
-   - export DB_NAME="network_devices_db"
-   - export COLLECTION_NAME="devices"
-   - export FLASK_DEBUG=1
-5. python app.py
-   - API on http://localhost:5000
-   - Health at /healthz
-
-### Frontend (React)
+Quick Start (Frontend)
 1. cd ReactFrontend
 2. npm install
-3. Ensure .env values (REACT_APP_API_BASE=http://localhost:5000)
+3. Set environment variables (preferably via a .env file handled by the orchestrator):
+   - REACT_APP_API_BASE=http://localhost:5000
+   - Optionally:
+     - REACT_APP_BACKEND_URL
+     - REACT_APP_FRONTEND_URL
 4. npm start
-   - UI on http://localhost:3000
+   - UI runs at http://localhost:3000
 
-## API Summary
-- GET /devices
-- POST /devices
-- GET /devices/{name}
-- PUT /devices/{name}
-- DELETE /devices/{name}
-- GET /ping/{name}
+Environment Variables
+- REACT_APP_API_BASE (recommended): Base URL for the backend API (e.g., http://localhost:5000).
+- REACT_APP_BACKEND_URL: Alternate variable supported for backwards compatibility.
+- REACT_APP_FRONTEND_URL: May be used by the backend for CORS origin configuration.
 
-## Configuration
-- Backend uses config.py and env vars: MONGO_URI, DB_NAME, COLLECTION_NAME
-- Frontend uses REACT_APP_API_BASE to reach backend
+Notes
+- Only frontend code is present in this workspace.
+- API calls in src/api.js respect REACT_APP_API_BASE (preferred) falling back to REACT_APP_BACKEND_URL, then http://localhost:5000.
+- Ensure the corresponding backend container is running and accessible at the URL configured above.
