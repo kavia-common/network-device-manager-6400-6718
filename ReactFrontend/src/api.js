@@ -1,20 +1,14 @@
 import axios from "axios";
 
 /**
- * Base URL resolution order for the backend API:
- * 1. REACT_APP_API_BASE (preferred)
- * 2. Fallback to the provided default deployment URL
- *
- * Note:
- * - We intentionally avoid defaulting to window.location.origin to prevent
- *   preview/hosting origins from being used accidentally.
- * - REACT_APP_BACKEND_URL is no longer used for fallback to keep configuration explicit.
+ * Backend API base URL is hardcoded to the deployment URI so all requests
+ * consistently target the same backend regardless of environment.
  */
-const DEFAULT_API_BASE = "https://8d8f8324.api.kavia.app/";
-const baseURL = process.env.REACT_APP_API_BASE || DEFAULT_API_BASE;
+const BASE_URL = "https://8d8f8324.api.kavia.app/";
 
+// Create a single Axios instance used across the app
 export const api = axios.create({
-  baseURL,
+  baseURL: BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
