@@ -7,10 +7,9 @@ This workspace now contains:
 Quick Start (Frontend)
 1. cd ReactFrontend
 2. npm install
-3. Set environment variables (preferably via a .env handled by the orchestrator):
-   - REACT_APP_API_BASE=http://localhost:5000
+3. (Optional) Set environment variables (preferably via a .env handled by the orchestrator):
+   - REACT_APP_API_BASE=<your backend base> (defaults to https://8d8f8324.api.kavia.app/)
    - Optionally:
-     - REACT_APP_BACKEND_URL
      - REACT_APP_FRONTEND_URL
 4. npm start
    - UI runs at http://localhost:3000

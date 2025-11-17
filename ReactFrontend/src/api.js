@@ -3,13 +3,15 @@ import axios from "axios";
 /**
  * Base URL resolution order for the backend API:
  * 1. REACT_APP_API_BASE (preferred)
- * 2. REACT_APP_BACKEND_URL (fallback)
- * 3. Default http://localhost:5000
+ * 2. Fallback to the provided default deployment URL
+ *
+ * Note:
+ * - We intentionally avoid defaulting to window.location.origin to prevent
+ *   preview/hosting origins from being used accidentally.
+ * - REACT_APP_BACKEND_URL is no longer used for fallback to keep configuration explicit.
  */
-const baseURL =
-  process.env.REACT_APP_API_BASE ||
-  process.env.REACT_APP_BACKEND_URL ||
-  "https://8d8f8324.api.kavia.app/";
+const DEFAULT_API_BASE = "https://8d8f8324.api.kavia.app/";
+const baseURL = process.env.REACT_APP_API_BASE || DEFAULT_API_BASE;
 
 export const api = axios.create({
   baseURL,

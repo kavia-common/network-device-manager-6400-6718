@@ -3,17 +3,16 @@
 This UI communicates with the Flask backend via Axios.
 
 Environment
-Set one of:
-- REACT_APP_API_BASE (recommended) — e.g., http://localhost:5000
-or
-- REACT_APP_BACKEND_URL
+- Preferred: REACT_APP_API_BASE (e.g., https://8d8f8324.api.kavia.app/ or http://localhost:5000)
+- If REACT_APP_API_BASE is not set, the app defaults to: https://8d8f8324.api.kavia.app/
 
 Other helpful values:
 - REACT_APP_FRONTEND_URL to assist backend CORS origin
 
 Run
 - npm install
-- REACT_APP_API_BASE=http://localhost:5000 npm start
+- npm start
+  - Optionally override: REACT_APP_API_BASE=http://localhost:5000 npm start
 
 The UI provides:
 - Device list
