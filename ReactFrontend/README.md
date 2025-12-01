@@ -12,8 +12,9 @@ Other helpful values:
 - REACT_APP_FRONTEND_URL to assist backend CORS origin
 
 Run
-- npm install
+- npm install --no-audit --no-fund --legacy-peer-deps
 - REACT_APP_API_BASE=http://localhost:5000 npm start
+- For production build: npm run build
 
 The UI provides:
 - Device list
