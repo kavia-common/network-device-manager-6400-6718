@@ -5,7 +5,7 @@ import axios from "axios";
  * consistently target the same backend regardless of environment.
  * Expected shape for GET /devices per OpenAPI and backend: { devices: [...] }
  */
-const BASE_URL = "https://8d8f8324.api.kavia.app/";
+const BASE_URL = "https://22e544ff.api.kavia.app/";
 
 // Create a single Axios instance used across the app
 export const api = axios.create({

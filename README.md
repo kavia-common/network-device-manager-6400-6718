@@ -8,7 +8,7 @@ Quick Start (Frontend)
 1. cd ReactFrontend
 2. npm install
 3. (Optional) Set environment variables (preferably via a .env handled by the orchestrator):
-   - REACT_APP_API_BASE=<your backend base> (defaults to https://8d8f8324.api.kavia.app/)
+   - REACT_APP_API_BASE=<your backend base> (defaults to https://22e544ff.api.kavia.app/)
    - Optionally:
      - REACT_APP_FRONTEND_URL
 4. npm start

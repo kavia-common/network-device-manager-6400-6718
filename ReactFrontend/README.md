@@ -3,8 +3,8 @@
 This UI communicates with the Flask backend via Axios.
 
 Environment
-- Preferred: REACT_APP_API_BASE (e.g., https://8d8f8324.api.kavia.app/ or http://localhost:5000)
-- If REACT_APP_API_BASE is not set, the app defaults to: https://8d8f8324.api.kavia.app/
+- Preferred: REACT_APP_API_BASE (e.g., https://22e544ff.api.kavia.app/ or http://localhost:5000)
+- If REACT_APP_API_BASE is not set, the app defaults to: https://22e544ff.api.kavia.app/
 
 Other helpful values:
 - REACT_APP_FRONTEND_URL to assist backend CORS origin
